@@ -77,7 +77,12 @@ This new type should have a new REST endpoint created for it. This new endpoint 
 the fully filled out ReportingStructure for the specified employeeId. The values should be computed on the fly and will 
 not be persisted.
 
-### Solution
+### Task 2
+Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
+two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
+Compensation from the persistence layer.
+
+### Solution for Task 1
 ```
 * READ
     * HTTP Method: GET 
@@ -134,12 +139,9 @@ Output JSON :
   "numberOfReports": 4
 }
 ```
-### Task 2
-Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
-two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
-Compensation from the persistence layer.
 
-### Solution
+
+### Solution for Task 2
 ```
 * CREATE
     * HTTP Method: POST 
