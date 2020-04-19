@@ -68,6 +68,12 @@ public class ReportingStructureServiceImpl implements ReportingStructureService{
                 //if employee is not present in the database
                 throw new RuntimeException("Invalid employeeId: " + reports.getEmployeeId());
             }
+            reports.setFirstName(emp.getFirstName());
+            reports.setLastName(emp.getLastName());
+            reports.setPosition(emp.getPosition());
+            reports.setDepartment(emp.getDepartment());
+            reports.setDirectReports(emp.getDirectReports());
+
             maxNumOfReports+= findReportsCount(emp);
         }
         return maxNumOfReports+1;
