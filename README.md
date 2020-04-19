@@ -78,16 +78,16 @@ the fully filled out ReportingStructure for the specified employeeId. The values
 not be persisted.
 
 ### Solution
-
+```
 * READ
     * HTTP Method: GET 
     * URL: localhost:8080/reportingStructure/{id}
     * RESPONSE: ReportingStructure
-    
+```    
 endpoint sample : http://localhost:8080/reportingStructure/16a596ae-edd3-4847-99fe-c4518e82c86f
 
 Output JSON : 
-
+```json
 {
   "employee": {
     "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
@@ -133,22 +133,22 @@ Output JSON :
   },
   "numberOfReports": 4
 }
-
+```
 ### Task 2
 Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
 two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
 Compensation from the persistence layer.
 
 ### Solution
-
+```
 * CREATE
     * HTTP Method: POST 
     * URL: localhost:8080/compensation
     * PAYLOAD: Compensation
     * RESPONSE: Compensation
-    
+```    
 Output JSON
-
+```json
 {
   "employee": {
     "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
@@ -178,14 +178,16 @@ Output JSON
   "salary": 7000,
   "effectiveDate": "2020-22-17-13:22"
 }
-
+```
+```
 * READ
     * HTTP Method: GET 
     * URL: localhost:8080/compensation/employee/{id}
     * RESPONSE: Compensation
+```
 Sample endpoint : http://localhost:8080/compensation/employee/16a596ae-edd3-4847-99fe-c4518e82c86f    
 Output JSON
-
+```json
 {
   "employee": {
     "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
@@ -215,6 +217,6 @@ Output JSON
   "salary": 7000,
   "effectiveDate": "2020-22-17-13:22"
 }
-
+```
 ## Delivery
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.
