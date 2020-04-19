@@ -1,6 +1,7 @@
 package com.mindex.challenge.service.impl;
 
 import com.mindex.challenge.dao.EmployeeRepository;
+import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.data.ReportingStructure;
 import com.mindex.challenge.service.ReportingStructureService;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The Service to manage the {@link ReportingStructure} entities
+ */
 @Service
 public class ReportingStructureServiceImpl implements ReportingStructureService{
 
@@ -19,6 +23,11 @@ public class ReportingStructureServiceImpl implements ReportingStructureService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    /**
+     * Find the {@linkplain ReportingStructure reportingStructure} object with specified id
+     * @param id The id of the {@linkplain com.mindex.challenge.data.Employee} to find compensation
+     * @return the found {@linkplain ReportingStructure reportingStructure} object
+     */
     @Override
     public ReportingStructure read(String id) {
         LOG.debug("Creating ReportingStructure with id [{}]", id);
@@ -32,27 +41,35 @@ public class ReportingStructureServiceImpl implements ReportingStructureService{
         ReportingStructure reportingStructure = new ReportingStructure();
 
         reportingStructure.setEmployee(employee);
-        reportingStructure.setNumberOfReports(findReportsCount(employee));
+        reportingStructure.setNumberOfReports(findReportsCount(employee)-1);
 
         return reportingStructure;
     }
 
-    public int findReportsCount(Employee employee) {
+    /**
+     * The Recursive method to calculate the number of reports for a particular employee. If no reports it returns 0
+     * @param employee the {@linkplain Employee employee} entity for which number of reports needs to be counted
+     * @return the value of the number of reports
+     */
+    private int findReportsCount(Employee employee) {
 
-        int numemployee = 0;
-        List<Employee> temp = employee.getDirectReports();
-        if (temp == null) {
-            return numemployee;
-        }
-        for (Employee x : temp) {
-            Employee e = employeeRepository.findByEmployeeId(x.getEmployeeId());
-            if (e == null) {
-                throw new RuntimeException("Invalid employeeId: " + x.getEmployeeId());
+        //base condition, if the employee has no report
+        if(employee.getDirectReports() == null)
+            return 1;
+
+        int maxNumOfReports = 0;
+
+        //looping through all the direct reports of the employee
+        for(Employee reports:employee.getDirectReports()) {
+
+            //the database call to fetch the employee
+            Employee emp = employeeRepository.findByEmployeeId(reports.getEmployeeId());
+            if (emp == null) {
+                //if employee is not present in the database
+                throw new RuntimeException("Invalid employeeId: " + reports.getEmployeeId());
             }
-            numemployee += Math.max(numemployee, findReportsCount(e));
-
+            maxNumOfReports+= findReportsCount(emp);
         }
-
-        return numemployee + temp.size();
+        return maxNumOfReports+1;
     }
 }
